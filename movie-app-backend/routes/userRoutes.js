@@ -9,3 +9,5 @@ router.post("/",addNewUser)
 
 
 export default router;
+
+import { validators } from "../middlewares/users-validator.js";
