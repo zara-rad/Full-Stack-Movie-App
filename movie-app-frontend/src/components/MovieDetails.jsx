@@ -83,7 +83,8 @@ export default function MovieDetails({ addToCart }) {
         if (!imdbID) return;
 
         setLoading(true);
-        fetch(`http://www.omdbapi.com/?i=${imdbID}&apikey=${import.meta.env.VITE_API_KEY}`)
+        //fetch(`http://www.omdbapi.com/?i=${imdbID}&apikey=${import.meta.env.VITE_API_KEY}`)
+        fetch(`http://localhost:6002/movies`)
             .then((res) => res.json())
             .then((result) => {
                 setLoading(false);
