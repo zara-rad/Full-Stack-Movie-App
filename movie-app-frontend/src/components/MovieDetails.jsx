@@ -11,11 +11,12 @@ export default function MovieDetails({ addToCart }) {
   useEffect(() => {
     if (!imdbID) return;
     setLoading(true);
-    //fetch(`http://www.omdbapi.com/?i=${imdbID}&apikey=${import.meta.env.VITE_API_KEY}`)
-    fetch(`http://localhost:6002/movies`)
-      .then((res) => res.json())
+    fetch(`http://www.omdbapi.com/?i=${imdbID}&apikey=${import.meta.env.VITE_API_KEY}`)
+/*     fetch(`http://localhost:6002/movies/${imdbID}`)
+ */      .then((res) => res.json())
       .then((result) => {
         setLoading(false);
+        console.log(result)
         setMovie(result); // Store movie details
       })
       .catch((err) => {
@@ -62,6 +63,9 @@ export default function MovieDetails({ addToCart }) {
         </p>
         <p>
           <strong>Actors:</strong> {movie.Actors}
+        </p>
+        <p>
+          <strong>Prise:</strong> {movie.Price}
         </p>
         <button
           onClick={() => addToCart(movie)}

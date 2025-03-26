@@ -61,6 +61,9 @@ export default function Cards({ searchTerm, addToCart }) {
               <p className="movie-year text-center">Year: {movie.Year}</p>
               <button
                 onClick={() => {
+                  // Ensure addToCart function is being called correctly
+/*                   console.log("Adding movie to cart:", movie);
+ */                  addToCart(movie); // This will update the cart state
                   console.log("Adding movie to cart:", movie);
                   addToCart(movie);
                 }}

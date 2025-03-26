@@ -21,8 +21,7 @@ function App() {
 
 
   const addToCart = (movie) => {
-    alert("Item successfully added"); // Check if the movie is already in the cart
-    if (!cart.some((item) => item.imdbID === movie.imdbID)) {
+   if (!cart.some((item) => item.imdbID === movie.imdbID)) {
       setCart([...cart, { ...movie, quantity: 1 }]); // Add movie with initial quantity of 1
     } else {
       alert("This movie is already in your cart!");
