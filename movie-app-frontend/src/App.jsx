@@ -6,6 +6,7 @@ import Cart from "./components/Cart.jsx";
 import Register from "./components/Register.jsx"; // import the Register component
 import { useState, useEffect } from "react";
 import Login from "./components/Login.jsx";
+import AdminPanel from "./components/AdminPanel.jsx";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -17,7 +18,7 @@ function App() {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  
+
 
   const addToCart = (movie) => {
    if (!cart.some((item) => item.imdbID === movie.imdbID)) {
@@ -63,6 +64,7 @@ function App() {
         <Route path="/register" element={<Register />} />{" "}
         {/* Add Register route */}
         <Route path="/login" element={<Login />} /> {/* Add Register route */}
+        <Route path="/admin" element={<AdminPanel />} /> {/* Add AdminPanel */}
       </Routes>
     </BrowserRouter>
   );
