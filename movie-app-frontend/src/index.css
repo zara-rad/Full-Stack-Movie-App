@@ -118,6 +118,11 @@ button:hover {
   align-items: center;
   min-height: 100vh;
 }
+.cart-basket-h2 {
+  color: #FFCC00;
+
+}
+
 
 .movie-details {
   border-radius: 10px;
@@ -217,22 +222,6 @@ input {
 .register-form button:hover {
   background-color: #F0B800;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ul {
@@ -374,11 +363,12 @@ header nav a:hover {
 .cart-count {
   position: absolute;
   top: -5px;
-  right: -5px;
+  right: -12px;
   color: #FFCC00;
   padding: 5px;
-  font-size: 12px;
+  font-size: 5px;
   font-weight: lighter;
+  
 }
 
 /* Adjust body content to not overlap header */

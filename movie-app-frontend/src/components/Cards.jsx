@@ -59,8 +59,8 @@ export default function Cards({ searchTerm, addToCart }) {
               <button
                 onClick={() => {
                   // Ensure addToCart function is being called correctly
-                  console.log("Adding movie to cart:", movie);
-                  addToCart(movie); // This will update the cart state
+/*                   console.log("Adding movie to cart:", movie);
+ */                  addToCart(movie); // This will update the cart state
                 }}
                 className="bg-blue-500 text-white px-3 py-1 mt-2 rounded"
               >
