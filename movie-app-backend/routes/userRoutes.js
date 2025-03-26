@@ -7,11 +7,12 @@ import {
   addNewUser,
   loginUser,
 } from "../controllers/userController.js";
+import { isAdmin } from "../middlewares/isAdmin.js";
 const router = Router();
 
-router.get("/", auth, getAllusers);
-router.get("/:id", auth, getUsersById);
-router.post("/",validators, addNewUser);
+router.get("/", auth, isAdmin, getAllusers);
+router.get("/:id", auth, isAdmin, getUsersById);
+router.post("/", validators, addNewUser);
 router.post("/login", loginUser); // This maps to loginUser in your controller
 
 export default router;
