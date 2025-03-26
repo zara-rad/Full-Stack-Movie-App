@@ -1,15 +1,17 @@
 import { Router } from "express";
 import { auth } from "../middlewares/authentication.js";
 import { validators } from "../middlewares/users-validator.js";
+import { isAdmin } from "../middlewares/isAdmin.js";
 import {
   getAllusers,
   getUsersById,
   addNewUser,
   loginUser,
 } from "../controllers/userController.js";
-import { isAdmin } from "../middlewares/isAdmin.js";
-const router = Router();
 
+import multer from "multer"
+const router = Router();
+router.post("/", multerMiddleware.single("profile_image"),validators, createNewUser);
 router.get("/", auth, isAdmin, getAllusers);
 router.get("/:id", auth, isAdmin, getUsersById);
 router.post("/", validators, addNewUser);
