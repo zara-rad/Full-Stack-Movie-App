@@ -5,14 +5,14 @@ export default function Register() {
     firstName: "",
     lastName: "",
     email: "",
-    password: ""
+    password: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -27,17 +27,23 @@ export default function Register() {
         },
         body: JSON.stringify(formData),
       });
-     /*  if (!response.ok) {
-        throw new Error(`Server error! Status: ${response.status}`);
-      }
- */
-      const data = await response.json();
 
+      const data = await response.json();
+/*       console.log("Server response:", data); // Debugging response
+ */
       if (data.success) {
         alert("User registered successfully!");
         setFormData({ firstName: "", lastName: "", email: "", password: "" }); // Reset form
       } else {
-        alert(`Error: ${data.message || "Registration failed"}`);
+        // Handle error messages properly
+        let errorMessage =
+          typeof data.message === "string"
+            ? data.message
+            : Array.isArray(data.message)
+            ? data.message.map((err) => err.msg).join("\n")
+            : "Registration failed";
+
+        alert(`Error: ${errorMessage}`);
       }
     } catch (error) {
       console.error("Error registering user:", error);

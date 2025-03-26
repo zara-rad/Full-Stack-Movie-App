@@ -10,7 +10,11 @@ export default function Cards({ searchTerm, addToCart }) {
       try {
         setLoading(true);
         const query = searchTerm || "Marvel";
-        const response = await fetch(`https://www.omdbapi.com/?s=${query}&apikey=${import.meta.env.VITE_API_KEY}`);
+        const response = await fetch(
+          `https://www.omdbapi.com/?s=${query}&apikey=${
+            import.meta.env.VITE_API_KEY
+          }`
+        );
         const result = await response.json();
 
         if (result.Search) {
@@ -46,8 +50,9 @@ export default function Cards({ searchTerm, addToCart }) {
                 className="movie-poster"
                 onError={(e) => {
                   e.target.style.display = "none";
-                  e.target.parentNode.appendChild(document.createElement("p")).innerText =
-                    "Poster not available";
+                  e.target.parentNode.appendChild(
+                    document.createElement("p")
+                  ).innerText = "Poster not available";
                 }}
               />
               <p className="movie-year">Year: {movie.Year}</p>

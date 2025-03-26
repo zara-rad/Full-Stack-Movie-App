@@ -1,13 +1,17 @@
-import express from "express";
-import { getAllusers,getUsersById , addNewUser} from "../controllers/userController.js";
-const router = express.Router();
+import { Router } from "express";
+import { auth } from "../middlewares/authentication.js";
+import { validators } from "../middlewares/users-validator.js";
+import {
+  getAllusers,
+  getUsersById,
+  addNewUser,
+  loginUser,
+} from "../controllers/userController.js";
+const router = Router();
 
-router.get("/",getAllusers)
-router.get("/:id",getUsersById )
-router.post("/",addNewUser)
-
-
+router.get("/", auth, getAllusers);
+router.get("/:id", auth, getUsersById);
+router.post("/",validators, addNewUser);
+router.post("/login", loginUser); // This maps to loginUser in your controller
 
 export default router;
-
-import { validators } from "../middlewares/users-validator.js";
