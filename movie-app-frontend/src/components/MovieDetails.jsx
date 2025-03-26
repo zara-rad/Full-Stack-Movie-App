@@ -1,11 +1,12 @@
 
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export default function MovieDetails({ addToCart }) {
   const { imdbID } = useParams(); // Extract the movie ID from the URL
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(false);
+  //const {user}=useContext()
 
   useEffect(() => {
     if (!imdbID) return;
@@ -31,7 +32,7 @@ export default function MovieDetails({ addToCart }) {
   }
 
 
-  
+
   return (
     <div className="card-container p-6">
       <div className="movie-details">
@@ -68,7 +69,17 @@ export default function MovieDetails({ addToCart }) {
         >
           Add to Cart
         </button>
+        {/*  {user?.role === "admin" && <>
+          <button>Delete Movie</button>
+          <button>Update Movies</button>
+        </>} */}
       </div>
     </div>
   );
 }
+
+
+
+
+
+
