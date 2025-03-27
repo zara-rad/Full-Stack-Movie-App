@@ -55,7 +55,7 @@ app.get("/movies", async (req, res, next) => {
 app.post("/create-checkout-session", async (req, res) => {
     try {
       const { cartItems } = req.body;
-  
+  console.log(cartItems)
         // Ensure the price is valid and in cents (multiply by 100)
         const line_items = cartItems.map((item) => {
             const priceInCents = Math.round(parseFloat(item.price) * 100); // Convert to cents and ensure it is a number
@@ -67,7 +67,7 @@ app.post("/create-checkout-session", async (req, res) => {
               price_data: {
                 currency: "usd", // Adjust to your currency if necessary
                 product_data: {
-                  name: item.Title,
+                  name: item.title,
                 },
                 unit_amount: priceInCents, // Must be an integer
               },
