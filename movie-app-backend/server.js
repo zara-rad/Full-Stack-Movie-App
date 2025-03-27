@@ -51,46 +51,50 @@ app.get("/movies", async (req, res, next) => {
     res.send(movieData);
   }
 });
-// Stripe Checkout Session Route
+
+
 app.post("/create-checkout-session", async (req, res) => {
-    try {
-      const { cartItems } = req.body;
-  console.log(cartItems)
-        // Ensure the price is valid and in cents (multiply by 100)
-        const line_items = cartItems.map((item) => {
-            const priceInCents = Math.round(parseFloat(item.price) * 100); // Convert to cents and ensure it is a number
-            if (isNaN(priceInCents) || priceInCents <= 0) {
-                throw new Error(`Invalid price for item: ${item.Title}`);
-              }
-      
-            return {
-              price_data: {
-                currency: "usd", // Adjust to your currency if necessary
-                product_data: {
-                  name: item.title,
-                },
-                unit_amount: priceInCents, // Must be an integer
-              },
-              quantity: item.quantity,
-            };
-          });
-  
-      // Create the checkout session with Stripe
-      const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        line_items,
-        mode: 'payment',
-        success_url: `${process.env.FRONTEND_URL}/success`,  // Customize success URL
-        cancel_url: `${process.env.FRONTEND_URL}/cancel`,   // Customize cancel URL
-      });
-  
-      // Send back the session ID
-      res.json({ id: session.id });
-    } catch (error) {
-      console.error("Stripe Checkout Error:", error);
-      res.status(500).send("Internal Server Error");
+
+  try {
+    const { cartItems } = req.body;
+
+    if (!cartItems || cartItems.length === 0) {
+      return res.status(400).json({ message: "Cart is empty" });
     }
-  });
+
+    const line_items = cartItems.map((item) => {
+      if (!item.price || isNaN(Number(item.price))) {
+        throw new Error(`Invalid price for item: ${item.title}`);
+      }
+
+      return {
+        price_data: {
+          currency: "usd", // Change this if needed
+          product_data: {
+            name: item.title, // Ensure this field exists
+            description: item.year ? `Released in ${item.year}` : "Movie item",
+            images: item.image ? [item.image] : [],
+          },
+          unit_amount: Math.round(Number(item.price) * 100), // Convert price to cents
+        },
+        quantity: item.quantity,
+      };
+    });
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items,
+      mode: "payment",
+      success_url: `${process.env.FRONTEND_URL}/?payment=success`,
+      cancel_url: `${process.env.FRONTEND_URL}/cart?payment=cancel`,
+    });
+
+    res.json({ id: session.id });
+  } catch (error) {
+    console.error("Stripe Checkout Error:", error);
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
+  }
+});
 
 // Centralized error handling middleware
 app.use((err, req, res, next) => {

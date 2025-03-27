@@ -3,8 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 
 export default function Header({ setSearchTerm, cartItems }) {
   const location = useLocation(); // Get the current route
- const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
- 
+  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
   const handleSearch = (e) => {
     e.preventDefault();
     const query = e.target.elements.searchInput.value.trim();
@@ -33,18 +33,20 @@ export default function Header({ setSearchTerm, cartItems }) {
         <Link to="/profile">Profile</Link>
         <Link to="/cart" className="cart-link">
           <span role="img" aria-label="cart">
-            🛒   {/* {totalItems} */} 
+            🛒 {/* {totalItems} */}
           </span>
           {cartItems.length > 0 && (
-            <span className="cart-count "> {/* {cartItems.length}  */}   {totalItems} </span>
+            <span className="cart-count ">
+              {" "}
+              {/* {cartItems.length}  */} {totalItems}{" "}
+            </span>
           )}
         </Link>
       </nav>
 
       {!isMovieDetailPage && !isRegisterPage && !isCartPage && !isLoginPage && (
         <form className="search-form" onSubmit={handleSearch}>
-          <h1>Movie Search</h1>
-          <p>Find your favorite movies!</p>
+          <h1>Movie Search Find your favorite movies!</h1>
           <input
             type="text"
             name="searchInput"
