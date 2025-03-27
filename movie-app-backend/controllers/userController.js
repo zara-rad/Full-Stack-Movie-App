@@ -2,7 +2,7 @@ import UserModel from "../models/userSchema.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-export const getAllusers = async (req, res, send) => {
+export const getAllUsers = async (req, res, send) => {
   try {
     const users = await UserModel.find();
     res.send({ success: true, data: users });

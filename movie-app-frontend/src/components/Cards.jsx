@@ -10,6 +10,12 @@ export default function Cards({ searchTerm, addToCart }) {
     const fetchMovies = async () => {
       try {
         setLoading(true);
+      /*   const query = searchTerm || "Marvel";
+        const response = await fetch(
+          `https://www.omdbapi.com/?s=${query}&apikey=${import.meta.env.VITE_API_KEY
+          }`
+        ); */
+        const response =await fetch("http://localhost:6002/movies")
         const query = searchTerm || "Marvel";
         /* const response = await fetch(
           `https://www.omdbapi.com/?s=${query}&apikey=${import.meta.env.VITE_API_KEY
