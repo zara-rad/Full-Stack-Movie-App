@@ -36,7 +36,7 @@ function App() {
     );
   };
   const removeFromCart = (id) => {
-    setCart(cart.filter((item) => item.imdbID !== id));
+    setCart(cart.filter((item) => item._id !== id));
   };
 
   return (

@@ -24,7 +24,7 @@ export default function Cart({ cartItems, removeFromCart, updateQuantity }) {
       );
 
       const session = await response.json();
-
+  console.log(session)
       // Redirect to Stripe Checkout page
       const stripe = await stripePromise;
       const { error } = await stripe.redirectToCheckout({
@@ -80,7 +80,7 @@ export default function Cart({ cartItems, removeFromCart, updateQuantity }) {
                       +
                     </button>
                     <button
-                      onClick={() => removeFromCart(item.imdbID)}
+                      onClick={() => removeFromCart(item._id)}
                       className="remove-btn">
                       Remove
                     </button>
