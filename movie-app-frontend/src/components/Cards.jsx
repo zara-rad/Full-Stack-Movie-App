@@ -11,14 +11,15 @@ export default function Cards({ searchTerm, addToCart }) {
       try {
         setLoading(true);
         const query = searchTerm || "Marvel";
-        const response = await fetch(
+        /* const response = await fetch(
           `https://www.omdbapi.com/?s=${query}&apikey=${import.meta.env.VITE_API_KEY
           }`
-        );
+        );  */
+        const response = await fetch("http://localhost:6002/movies")
         const result = await response.json();
 
-        if (result.Search) {
-          setMovies(result.Search);
+        if (result.success) {
+          setMovies(result.data);
         } else {
           setMovies([]);
         }
@@ -42,13 +43,13 @@ export default function Cards({ searchTerm, addToCart }) {
           {movies.map((movie) => (
             <div key={movie.imdbID} className="movie-item">
               {/* Wrap the whole card inside Link */}
-              <Link to={`/movie/${movie.imdbID}`} className="block">
+              <Link to={`/movie/${movie._id}`} className="block">
                 <p className="movie-title text-lg font-semibold cursor-pointer text-center">
-                  {movie.Title}
+                  {movie.title}
                 </p>
                 <img
-                  src={movie.Poster}
-                  alt={movie.Title}
+                  src={movie.image}
+                  alt={movie.title}
                   className="movie-poster cursor-pointer"
                   onError={(e) => {
                     e.target.style.display = "none";
@@ -58,7 +59,7 @@ export default function Cards({ searchTerm, addToCart }) {
                   }}
                 />
               </Link>
-              <p className="movie-year text-center">Year: {movie.Year}</p>
+              <p className="movie-year text-center">Year: {movie.year}</p>
               <button
                 onClick={() => {
                   console.log("Adding movie to cart:", movie);
