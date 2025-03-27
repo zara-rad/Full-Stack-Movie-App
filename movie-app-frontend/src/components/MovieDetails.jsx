@@ -11,10 +11,9 @@ export default function MovieDetails({ addToCart }) {
   useEffect(() => {
     if (!imdbID) return;
     setLoading(true);
-    /* fetch(`http://www.omdbapi.com/?i=${imdbID}&apikey=${import.meta.env.VITE_API_KEY}`)
- */   fetch(`http://localhost:6002/movies/${imdbID}`)
+     //fetch(`http://www.omdbapi.com/?i=${imdbID}&apikey=${import.meta.env.VITE_API_KEY}`)
+   fetch(`http://localhost:6002/movies/${imdbID}`)
        .then((res) => res.json())
-    //fetch(`http://www.omdbapi.com/?i=${imdbID}&apikey=${import.meta.env.VITE_API_KEY}`)
    fetch(`http://localhost:6002/movies/${imdbID}`)
       .then((res) => res.json())
       .then((result) => {
@@ -70,7 +69,6 @@ export default function MovieDetails({ addToCart }) {
         <p>
           <strong>Price:</strong> {movie.price}
 
-          <strong>Prise:</strong> {movie.price}
         </p>
         <button
           onClick={() => addToCart(movie)}
@@ -100,11 +98,11 @@ export default function MovieDetails({ addToCart }) {
     if (!imdbID) return;
     setLoading(true);
 
-    fetch(`http://www.omdbapi.com/?i=${imdbID}&apikey=${import.meta.env.VITE_API_KEY}`)
-      .then((res) => res.json())
+  fetch(`http://localhost:6002/movies/${imdbID}`)
+ .then((res) => res.json())
       .then((result) => {
         setLoading(false);
-        setMovie(result);
+        setMovie(result.data);
       })
       .catch((err) => {
         setLoading(false);
@@ -202,6 +200,127 @@ export default function MovieDetails({ addToCart }) {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+import { useParams, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+export default function MovieDetails({ addToCart }) {
+  const { title } = useParams(); // Use title as the identifier
+  const [movie, setMovie] = useState(null);
+  const [suggestedMovies, setSuggestedMovies] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!title) return;
+    setLoading(true);
+
+    fetch("http://localhost:6002/movies") // Fetch all movies
+      .then((res) => res.json())
+      .then((movies) => {
+        setLoading(false);
+        
+        // Find the selected movie by title
+        const selectedMovie = movies.find((m) => m.title === decodeURIComponent(title));
+        setMovie(selectedMovie);
+
+        if (selectedMovie) {
+          // Suggest movies with the same genre (excluding current movie)
+          const filteredMovies = movies.filter(
+            (m) => m.genre === selectedMovie.genre && m.title !== selectedMovie.title
+          );
+          setSuggestedMovies(filteredMovies.slice(0, 6)); // Limit to 6 suggestions
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.error("Error fetching movie details:", err);
+      });
+  }, [title]);
+
+  if (loading) return <p>Loading movie details...</p>;
+  if (!movie) return <p>Movie details not found!</p>;
+
+  return (
+    <div style={{ padding: "16px" }}>
+      <div style={{ maxWidth: "600px", margin: "auto", textAlign: "center" }}>
+        <h1 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "12px" }}>{movie.title}</h1>
+        <img
+          src={movie.image}
+          alt={movie.title}
+          style={{ width: "100%", maxWidth: "300px", height: "auto", borderRadius: "8px", marginBottom: "16px" }}
+          onError={(e) => (e.target.src = "https://via.placeholder.com/150")}
+        />
+        <p><strong>Year:</strong> {movie.year}</p>
+        <p><strong>Genre:</strong> {movie.genre}</p>
+        <p><strong>Director:</strong> {movie.director}</p>
+        <p><strong>Plot:</strong> {movie.plot}</p>
+        <p><strong>Actors:</strong> {movie.actors?.join(", ")}</p>
+        <p><strong>Price:</strong> ${movie.price}</p>
+        <button
+          onClick={() => addToCart(movie)}
+          style={{
+            backgroundColor: "#3b82f6",
+            color: "white",
+            padding: "8px 16px",
+            marginTop: "16px",
+            borderRadius: "6px",
+            cursor: "pointer",
+            border: "none",
+            fontSize: "16px",
+            transition: "background 0.3s",
+          }}
+          onMouseOver={(e) => (e.target.style.backgroundColor = "#2563eb")}
+          onMouseOut={(e) => (e.target.style.backgroundColor = "#3b82f6")}
+        >
+          Add to Cart
+        </button>
+      </div>
+
+      {suggestedMovies.length > 0 && (
+        <div style={{ marginTop: "20px", padding: "12px", borderRadius: "8px", textAlign: "center" }}>
+          <h3 style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "12px", color: "white" }}>
+            You Might Also Like
+          </h3>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", justifyContent: "center" }}>
+            {suggestedMovies.map((movie) => (
+              <Link
+                key={movie.title}
+                to={`/movie/${encodeURIComponent(movie.title)}`} // Ensure safe URL encoding
+                style={{
+                  backgroundColor: "#444",
+                  padding: "8px",
+                  borderRadius: "8px",
+                  width: "130px",
+                  textAlign: "center",
+                  transition: "transform 0.3s",
+                }}
+                onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
+                onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
+              >
+                <img
+                  src={movie.image}
+                  alt={movie.title}
+                  style={{ width: "100%", height: "180px", objectFit: "cover", borderRadius: "6px" }}
+                  onError={(e) => (e.target.src = "https://via.placeholder.com/150")}
+                />
+                <p style={{ fontSize: "14px", fontWeight: "bold", marginTop: "8px", color: "white" }}>{movie.title}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
  */
 
 
