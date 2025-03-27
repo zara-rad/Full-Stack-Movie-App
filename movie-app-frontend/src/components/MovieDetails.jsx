@@ -11,13 +11,13 @@ export default function MovieDetails({ addToCart }) {
   useEffect(() => {
     if (!imdbID) return;
     setLoading(true);
-    fetch(`http://www.omdbapi.com/?i=${imdbID}&apikey=${import.meta.env.VITE_API_KEY}`)
-/*     fetch(`http://localhost:6002/movies/${imdbID}`)
- */      .then((res) => res.json())
+    /* fetch(`http://www.omdbapi.com/?i=${imdbID}&apikey=${import.meta.env.VITE_API_KEY}`)
+ */   fetch(`http://localhost:6002/movies/${imdbID}`)
+       .then((res) => res.json())
       .then((result) => {
         setLoading(false);
         console.log(result)
-        setMovie(result); // Store movie details
+        setMovie(result.data); // Store movie details
       })
       .catch((err) => {
         setLoading(false);
@@ -37,10 +37,10 @@ export default function MovieDetails({ addToCart }) {
   return (
     <div className="card-container p-6">
       <div className="movie-details">
-        <h1 className="text-2xl font-bold mb-2">{movie.Title}</h1>
+        <h1 className="text-2xl font-bold mb-2">{movie.title}</h1>
         <img
-          src={movie.Poster}
-          alt={movie.Title}
+          src={movie.image}
+          alt={movie.title}
           className="mb-4"
           onError={(e) => {
             e.target.style.display = "none";
@@ -50,22 +50,22 @@ export default function MovieDetails({ addToCart }) {
           }}
         />
         <p>
-          <strong>Year:</strong> {movie.Year}
+          <strong>Year:</strong> {movie.year}
         </p>
         <p>
-          <strong>Genre:</strong> {movie.Genre}
+          <strong>Genre:</strong> {movie.genre}
         </p>
         <p>
-          <strong>Director:</strong> {movie.Director}
+          <strong>Director:</strong> {movie.director}
         </p>
         <p>
-          <strong>Plot:</strong> {movie.Plot}
+          <strong>Plot:</strong> {movie.plot}
         </p>
         <p>
-          <strong>Actors:</strong> {movie.Actors}
+          <strong>Actors:</strong> {movie.actors}
         </p>
         <p>
-          <strong>Prise:</strong> {movie.Price}
+          <strong>Price:</strong> {movie.price}
         </p>
         <button
           onClick={() => addToCart(movie)}
