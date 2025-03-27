@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -10,21 +9,18 @@ export default function Cards({ searchTerm, addToCart }) {
     const fetchMovies = async () => {
       try {
         setLoading(true);
-      /*   const query = searchTerm || "Marvel";
+        /*   const query = searchTerm || "Marvel";
         const response = await fetch(
           `https://www.omdbapi.com/?s=${query}&apikey=${import.meta.env.VITE_API_KEY
           }`
         ); */
-        const response =await fetch("http://localhost:6002/movies")
+        const response = await fetch("http://localhost:6002/movies");
         const query = searchTerm || "Marvel";
         /* const response = await fetch(
           `https://www.omdbapi.com/?s=${query}&apikey=${import.meta.env.VITE_API_KEY
           }`
         );  */
-        const response = await fetch("http://localhost:6002/movies")
-       
 
-        const response=await fetch("http://localhost:6002/movies")
         const result = await response.json();
 
         if (result.success) {
@@ -87,13 +83,12 @@ export default function Cards({ searchTerm, addToCart }) {
               <button
                 onClick={() => {
                   // Ensure addToCart function is being called correctly
-/*                   console.log("Adding movie to cart:", movie);
- */                  addToCart(movie); // This will update the cart state
+                  /*                   console.log("Adding movie to cart:", movie);
+                   */ addToCart(movie); // This will update the cart state
                   console.log("Adding movie to cart:", movie);
                   addToCart(movie);
                 }}
-                className="bg-blue-500 text-white px-3 py-1 mt-2 rounded w-full"
-              >
+                className="bg-blue-500 text-white px-3 py-1 mt-2 rounded w-full">
                 Add to Cart
               </button>
             </div>
@@ -105,4 +100,3 @@ export default function Cards({ searchTerm, addToCart }) {
     </div>
   );
 }
-
