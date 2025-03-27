@@ -50,12 +50,14 @@ export default function Cart({ cartItems, removeFromCart, updateQuantity }) {
               <div className="flex gap-4 items-center">
                 <img
                   src={item.image}
+
+                  src={item.poster}
                   alt={item.title}
                   className="w-24 h-36 object-cover rounded-md"
                 />
                 <div>
                   <span className="text-lg font-semibold text-white">
-                    {item.Title} ({item.Year})
+                    {item.Title} ({item.year})
                   </span>
                   <div className="flex items-center gap-2 mt-2">
                     <button

@@ -7,6 +7,7 @@ import Register from "./components/Register.jsx"; // import the Register compone
 import { useState, useEffect } from "react";
 import Login from "./components/Login.jsx";
 import AdminPanel from "./components/AdminPanel.jsx";
+import ProfilePage from "./components/ProfilePage.jsx";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -65,6 +66,7 @@ function App() {
         {/* Add Register route */}
         <Route path="/login" element={<Login />} /> {/* Add Register route */}
         <Route path="/admin" element={<AdminPanel />} /> {/* Add AdminPanel */}
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>
   );
