@@ -1,29 +1,34 @@
+/* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-unused-vars
-import React, { useState, useEffect } from "react";
-/* import {MyContext} from "./" */
+import React, { useState, useEffect,useContext } from "react";
+import {MyContext} from "../context/Context"
+
+
 const ProfilePage = () => {
-  const [userData, setUserData] = useState(null);
-  const [movies, setMovies] = useState([]);
 
-  useEffect(() => {
-    // Fetch user data. Update the path to user data source.
-    fetch("/")
+  const { user, setUser, movies, setMovies } = useContext(MyContext);
+
+  /* useEffect(() => {
+    // Fetch user data
+    fetch("http://localhost:6002/user")
       .then((response) => response.json())
-      .then((data) => setUserData(data));
+      .then((data) => setUser(data))
+      .catch((error) => console.error("Error fetching user data:", error))
 
-    // Fetch movie data to movie.json.
-    fetch("/path to movies.json")
+    // Fetch movie data
+    fetch("http://localhost:6002/movies")
       .then((response) => response.json())
-      .then((data) => setMovies(data));
-  }, []);
+      .then((data) => setMovies(data))
+      .catch((error) => console.error("Error fetching movies:", error))
+  }, [setUser, setMovies]) */
 
-  if (!userData) return <div>Loading user data...</div>;
-  if (movies.length === 0) return <div>Loading movies...</div>;
+  if (!user) return <div>Loading user data...</div>;
+  /* if (!movies || movies.length === 0) return <div>Loading movies...</div>; */
 
   return (
     <div style={styles.container}>
       <header style={styles.header}>
-        <h1>Welcome, {userData.username}!</h1>
+        <h1>Welcome, {user.username}!</h1>
         <button style={styles.button}>Upload Profile Image</button>
         <button style={styles.button}>Log Out</button>
       </header>
@@ -36,23 +41,23 @@ const ProfilePage = () => {
           Purchase History
         </a>
       </nav>
-
+{}
       <section id="overview">
         <h2 style={styles.subHeader}>Profile Overview</h2>
-        <p>Email: {userData.email}</p>
-        <p>Join Date: {userData.joinDate}</p>
+        <p>Email: {user.email}</p>
+        <p>Join Date: {user.joinDate}</p>
       </section>
 
-      <section id="purchase-history">
+      {/* <section id="purchase-history">
         <h2 style={styles.subHeader}>Purchase History</h2>
         <ul style={styles.purchaseList}>
-          {userData.purchaseHistory.map((purchase, index) => (
+          {user.purchaseHistory.map((purchase, index) => (
             <li key={index} style={styles.purchaseItem}>
               {purchase.title} - {purchase.date} - ${purchase.price.toFixed(2)}
             </li>
           ))}
         </ul>
-      </section>
+      </section> */}
     </div>
   );
 };
@@ -69,13 +74,13 @@ const styles = {
   header: {
     textAlign: "center",
     marginBottom: "20px",
-    color: "#FFCC00",
+    color: "#FFCC00", // Yellow for header
   },
   button: {
     padding: "10px",
     borderRadius: "4px",
     border: "none",
-    backgroundColor: "#FFCC00",
+    backgroundColor: "#FFCC00", // Yellow for buttons
     color: "black",
     fontSize: "16px",
     cursor: "pointer",
@@ -83,7 +88,7 @@ const styles = {
   },
   link: {
     textDecoration: "none",
-    color: "#007BFF",
+    color: "#007BFF", // Blue for links
     margin: "0 10px",
   },
   navTabs: {
@@ -94,15 +99,15 @@ const styles = {
   subHeader: {
     fontSize: "20px",
     marginBottom: "10px",
-    color: "#333",
+    color: "#333", // Darker color for subheaders
   },
   purchaseList: {
-    listStyleType: "none",
-    padding: 0,
+    listStyleType: "none", 
+    padding: 0, 
   },
   purchaseItem: {
     marginBottom: "10px",
-    fontSize: "16px",
+    fontSize: "16px", // Font size for purchase items
   },
 };
 

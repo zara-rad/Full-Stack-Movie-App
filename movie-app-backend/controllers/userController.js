@@ -67,8 +67,10 @@ export const loginUser = async (req, res) => {
     );
     // Send the token and user data
     res
+    .header("token",token)
       .status(200)
       .json({ success: true, message: "Login successful", data: user, token });
+      //complete the verification route for token ask Zahra
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }

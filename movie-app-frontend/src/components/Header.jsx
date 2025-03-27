@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Link, useLocation } from "react-router-dom";
 
 export default function Header({ setSearchTerm, cartItems }) {
@@ -28,6 +29,7 @@ export default function Header({ setSearchTerm, cartItems }) {
         </Link>
         <Link to="/register">Register</Link>
         <Link to="/login">Login</Link>
+        <Link to="/profile">Profile</Link>
         <Link to="/cart" className="cart-link">
           <span role="img" aria-label="cart">
             🛒
