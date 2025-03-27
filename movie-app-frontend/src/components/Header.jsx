@@ -1,8 +1,10 @@
+/* eslint-disable react/prop-types */
 import { Link, useLocation } from "react-router-dom";
 
 export default function Header({ setSearchTerm, cartItems }) {
   const location = useLocation(); // Get the current route
-
+ const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+ 
   const handleSearch = (e) => {
     e.preventDefault();
     const query = e.target.elements.searchInput.value.trim();
@@ -28,12 +30,13 @@ export default function Header({ setSearchTerm, cartItems }) {
         </Link>
         <Link to="/register">Register</Link>
         <Link to="/login">Login</Link>
+        <Link to="/profile">Profile</Link>
         <Link to="/cart" className="cart-link">
           <span role="img" aria-label="cart">
-            🛒
+            🛒   {/* {totalItems} */} 
           </span>
           {cartItems.length > 0 && (
-            <span className="cart-count">{cartItems.length}</span>
+            <span className="cart-count "> {/* {cartItems.length}  */}   {totalItems} </span>
           )}
         </Link>
       </nav>

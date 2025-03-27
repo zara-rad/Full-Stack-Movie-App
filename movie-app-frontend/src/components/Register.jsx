@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 export default function Register() {
+  const navigate = useNavigate(); // Initialize useNavigate
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -34,6 +37,8 @@ export default function Register() {
       if (data.success) {
         alert("User registered successfully!");
         setFormData({ firstName: "", lastName: "", email: "", password: "" }); // Reset form
+        navigate("/login"); // Redirect to login page
+
       } else {
         // Handle error messages properly
         let errorMessage =

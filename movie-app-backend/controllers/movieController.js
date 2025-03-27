@@ -19,8 +19,9 @@ export const getAllMovies = async (req, res, next) => {
 // Handles potential CastError if the ID format is invalid.
 export const getSingleMovie = async (req, res, next) => {
   try {
+    console.log(req.params.id)
     const singleMovie = await MovieModel.findById(req.params.id);
-
+      
     // Check if the movie was found
     if (!singleMovie) {
       return res

@@ -7,6 +7,7 @@ import Register from "./components/Register.jsx"; // import the Register compone
 import { useState, useEffect } from "react";
 import Login from "./components/Login.jsx";
 import AdminPanel from "./components/AdminPanel.jsx";
+import ProfilePage from "./components/ProfilePage.jsx";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -21,8 +22,7 @@ function App() {
 
 
   const addToCart = (movie) => {
-    alert("Item successfully added"); // Check if the movie is already in the cart
-    if (!cart.some((item) => item.imdbID === movie.imdbID)) {
+   if (!cart.some((item) => item.imdbID === movie.imdbID)) {
       setCart([...cart, { ...movie, quantity: 1 }]); // Add movie with initial quantity of 1
     } else {
       alert("This movie is already in your cart!");
@@ -66,6 +66,7 @@ function App() {
         {/* Add Register route */}
         <Route path="/login" element={<Login />} /> {/* Add Register route */}
         <Route path="/admin" element={<AdminPanel />} /> {/* Add AdminPanel */}
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>
   );

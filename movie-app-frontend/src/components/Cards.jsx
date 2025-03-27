@@ -16,6 +16,9 @@ export default function Cards({ searchTerm, addToCart }) {
           }`
         );  */
         const response = await fetch("http://localhost:6002/movies")
+       
+
+        const response=await fetch("http://localhost:6002/movies")
         const result = await response.json();
 
         if (result.success) {
@@ -42,6 +45,21 @@ export default function Cards({ searchTerm, addToCart }) {
         <div className="movie-grid">
           {movies.map((movie) => (
             <div key={movie.imdbID} className="movie-item">
+              <Link to={`/movie/${movie._id}`} className="movie-title">
+                {movie.title}
+              </Link>
+              <img
+                src={movie.image}
+                alt={movie.title}
+                className="movie-poster"
+                onError={(e) => {
+                  e.target.style.display = "none";
+                  e.target.parentNode.appendChild(
+                    document.createElement("p")
+                  ).innerText = "Poster not available";
+                }}
+              />
+              <p className="movie-year">Year: {movie.year}</p>
               {/* Wrap the whole card inside Link */}
               <Link to={`/movie/${movie._id}`} className="block">
                 <p className="movie-title text-lg font-semibold cursor-pointer text-center">
@@ -62,6 +80,9 @@ export default function Cards({ searchTerm, addToCart }) {
               <p className="movie-year text-center">Year: {movie.year}</p>
               <button
                 onClick={() => {
+                  // Ensure addToCart function is being called correctly
+/*                   console.log("Adding movie to cart:", movie);
+ */                  addToCart(movie); // This will update the cart state
                   console.log("Adding movie to cart:", movie);
                   addToCart(movie);
                 }}

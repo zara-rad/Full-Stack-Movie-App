@@ -12,7 +12,7 @@ console.clear();
 
 const PORT = 6002;
 const app = express();
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: "http://localhost:5173", credentials: true,exposedHeaders:["token"]}));
 
 try {
   await mongoose.connect("mongodb://127.0.0.1:27017/Movies");
@@ -36,7 +36,7 @@ app.get("/movies", async (req, res, next) => {
     res.send(movies);
   } else {
     const response = await fetch(
-      `http://www.omdbapi.com/?i=${imdbID}&apikey=${process.env.VITE_API_KEY}`
+      //`http://www.omdbapi.com/?i=${imdbID}&apikey=${process.env.VITE_API_KEY}`
     );
     const movieData = await response.json();
     const updatedMoviesData = movieData.map((movie) => ({

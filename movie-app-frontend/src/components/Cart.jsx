@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 export default function Cart({ cartItems, removeFromCart, updateQuantity }) {
   return (
     <div className="container mx-auto p-6 bg-white shadow-lg rounded-lg max-w-3xl mt-6">
-      <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
-        Check Out What You’ve Picked
+<h2 className="cart-basket-h2">
+Check Out What You’ve Picked
       </h2>
       {cartItems.length > 0 ? (
         <ul>
@@ -15,13 +15,13 @@ export default function Cart({ cartItems, removeFromCart, updateQuantity }) {
             >
               <div className="flex gap-4 items-center">
                 <img
-                  src={item.Poster}
-                  alt={item.Title}
+                  src={item.poster}
+                  alt={item.title}
                   className="w-24 h-36 object-cover rounded-md"
                 />
                 <div>
                   <span className="text-lg font-semibold text-white">
-                    {item.Title} ({item.Year})
+                    {item.Title} ({item.year})
                   </span>
                   <div className="flex items-center gap-2 mt-2">
                     <button
@@ -54,13 +54,14 @@ export default function Cart({ cartItems, removeFromCart, updateQuantity }) {
                 </div>
               </div>
 
-              <button onClick={() => navigate("/checkout")}>Checkout</button>
             </li>
           ))}
         </ul>
       ) : (
         <p className="text-lg text-gray-600 text-center">No items in cart.</p>
       )}
+                    <button onClick={() => navigate("/checkout")}>Checkout</button>
+
     </div>
   );
 }
