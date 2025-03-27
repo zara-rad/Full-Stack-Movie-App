@@ -1,7 +1,12 @@
-import React from "react";
+/* eslint-disable no-unused-vars */
+
+import React, { useContext } from "react";
+import { MyContext } from "../context/Context";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-
+const{user, setUser}= useContext(MyContext)
+const navigate=useNavigate()
   // Function to handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -20,10 +25,14 @@ export default function Login() {
       if (!response.ok) {
         throw new Error(`Incorrect Email or Password: ${response.status}`);
       }
+      const token= response.headers.get("token")
+      localStorage.setItem("token",token)
       const data = await response.json();
       // Check if the response contains a success message
       if (data.success) {
         alert("Login successful!");
+        setUser(data.data)
+        navigate("/profile")
         // Redirect to another page or save user session/token here
         // For example, you might want to redirect to the dashboard:
         // window.location.href = "/dashboard";
