@@ -50,8 +50,6 @@ export default function Cart({ cartItems, removeFromCart, updateQuantity }) {
               <div className="flex gap-4 items-center">
                 <img
                   src={item.image}
-
-                  src={item.poster}
                   alt={item.title}
                   className="w-24 h-36 object-cover rounded-md"
                 />
