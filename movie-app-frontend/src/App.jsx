@@ -22,7 +22,7 @@ function App() {
 
 
   const addToCart = (movie) => {
-   if (!cart.some((item) => item.imdbID === movie.imdbID)) {
+   if (!cart.some((item) => item._id === movie._id)) {
       setCart([...cart, { ...movie, quantity: 1 }]); // Add movie with initial quantity of 1
     } else {
       alert("This movie is already in your cart!");
@@ -67,6 +67,8 @@ function App() {
         <Route path="/login" element={<Login />} /> {/* Add Register route */}
         <Route path="/admin" element={<AdminPanel />} /> {/* Add AdminPanel */}
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/movie/:movieId" element={<MovieDetails />} />
+
       </Routes>
     </BrowserRouter>
   );
