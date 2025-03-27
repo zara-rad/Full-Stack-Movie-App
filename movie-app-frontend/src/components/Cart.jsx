@@ -5,9 +5,11 @@ import { loadStripe } from "@stripe/stripe-js";
 export default function Cart({ cartItems, removeFromCart, updateQuantity }) {
   const navigate = useNavigate();
   const stripePromise = loadStripe(
-    "pk_test_51R1Nr7L8Ux1sPwlaGiU8MD10QxtcDYxbhDSFiOymOnUvQnfUp5MB9vTg8RbLYCwNQisMgNx7YAE1vQ9jGf9abSsL00A7EkTdr8"
+    import.meta.env.VITE_STRIPE_PUBLIC_KEY
   );
   const handleCheckout = async () => {
+    console.log("Received cart items:", cartItems);
+
     try {
       // Call your backend to create a checkout session
       const response = await fetch(
@@ -17,6 +19,7 @@ export default function Cart({ cartItems, removeFromCart, updateQuantity }) {
           headers: {
             "Content-Type": "application/json",
           },
+          
           body: JSON.stringify({ cartItems }), // Pass cartItems for backend to process
         }
       );
@@ -50,14 +53,12 @@ export default function Cart({ cartItems, removeFromCart, updateQuantity }) {
               <div className="flex gap-4 items-center">
                 <img
                   src={item.image}
-
-                  src={item.poster}
                   alt={item.title}
                   className="w-24 h-36 object-cover rounded-md"
                 />
                 <div>
                   <span className="text-lg font-semibold text-white">
-                    {item.Title} ({item.year})
+                    {item.title} ({item.year})
                   </span>
                   <div className="flex items-center gap-2 mt-2">
                     <button
@@ -86,14 +87,13 @@ export default function Cart({ cartItems, removeFromCart, updateQuantity }) {
                   </div>
                 </div>
               </div>
-           
             </li>
           ))}
         </ul>
       ) : (
         <p className="text-lg text-gray-600 text-center">No items in cart.</p>
       )}
-         <button onClick={handleCheckout}>Checkout</button>{" "}
+      <button onClick={handleCheckout}>Checkout</button>{" "}
     </div>
   );
 }
