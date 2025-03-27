@@ -1,65 +1,31 @@
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-unused-vars
-import React, { useState, useEffect,useContext } from "react";
-import {MyContext} from "../context/Context"
+import React, { useContext } from "react";
+import { MyContext } from "../context/Context"
+import { useNavigate } from "react-router-dom";
 
 
 const ProfilePage = () => {
 
-  const { user, setUser, movies, setMovies } = useContext(MyContext);
-
-  /* useEffect(() => {
-    // Fetch user data
-    fetch("http://localhost:6002/user")
-      .then((response) => response.json())
-      .then((data) => setUser(data))
-      .catch((error) => console.error("Error fetching user data:", error))
-
-    // Fetch movie data
-    fetch("http://localhost:6002/movies")
-      .then((response) => response.json())
-      .then((data) => setMovies(data))
-      .catch((error) => console.error("Error fetching movies:", error))
-  }, [setUser, setMovies]) */
-
+  const { user, setUser } = useContext(MyContext);
+  const navigate = useNavigate()
   if (!user) return <div>Loading user data...</div>;
   /* if (!movies || movies.length === 0) return <div>Loading movies...</div>; */
 
   return (
     <div style={styles.container}>
       <header style={styles.header}>
-        <h1>Welcome, {user.username}!</h1>
-        <button style={styles.button}>Upload Profile Image</button>
-        <button style={styles.button}>Log Out</button>
+        <h1>Welcome, {user.firstName}!</h1>
+        <button style={styles.button}>Upload Image</button>
+        <p style={styles.para}><strong>Email:</strong> {user.email} </p>
+        <button style={styles.button} onClick={() => navigate("/login")} >Log Out</button>
+
+
+
       </header>
-
-      <nav style={styles.navTabs}>
-        <a href="#overview" style={styles.link}>
-          Profile Overview
-        </a>
-        <a href="#purchase-history" style={styles.link}>
-          Purchase History
-        </a>
-      </nav>
-{}
-      <section id="overview">
-        <h2 style={styles.subHeader}>Profile Overview</h2>
-        <p>Email: {user.email}</p>
-        <p>Join Date: {user.joinDate}</p>
-      </section>
-
-      {/* <section id="purchase-history">
-        <h2 style={styles.subHeader}>Purchase History</h2>
-        <ul style={styles.purchaseList}>
-          {user.purchaseHistory.map((purchase, index) => (
-            <li key={index} style={styles.purchaseItem}>
-              {purchase.title} - {purchase.date} - ${purchase.price.toFixed(2)}
-            </li>
-          ))}
-        </ul>
-      </section> */}
     </div>
   );
+
 };
 
 const styles = {
@@ -84,7 +50,7 @@ const styles = {
     color: "black",
     fontSize: "16px",
     cursor: "pointer",
-    fontWeight: "bold",
+
   },
   link: {
     textDecoration: "none",
@@ -101,14 +67,11 @@ const styles = {
     marginBottom: "10px",
     color: "#333", // Darker color for subheaders
   },
-  purchaseList: {
-    listStyleType: "none", 
-    padding: 0, 
-  },
-  purchaseItem: {
-    marginBottom: "10px",
-    fontSize: "16px", // Font size for purchase items
-  },
+  para: {
+    padding: "10px",
+    color: "white"
+  }
+
 };
 
 export default ProfilePage;

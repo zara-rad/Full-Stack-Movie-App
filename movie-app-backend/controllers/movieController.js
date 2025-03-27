@@ -5,7 +5,15 @@ import MovieModel from "../models/movieSchema.js";
 // Returns a JSON response with a success status and the movies data.
 export const getAllMovies = async (req, res, next) => {
   try {
-    const movies = await MovieModel.find();
+    //test
+    const { title } = req.query;
+    let query = {}
+    if (title) {
+      query = { title: { $regex: title, $options: "i" } }; // Case-insensitive search
+    }
+    //till here also add query in find()
+
+    const movies = await MovieModel.find(query);
     res.status(200).json({ success: true, data: movies });
   } catch (err) {
     next(err);
@@ -21,7 +29,7 @@ export const getSingleMovie = async (req, res, next) => {
   try {
     console.log(req.params.id)
     const singleMovie = await MovieModel.findById(req.params.id);
-      
+
     // Check if the movie was found
     if (!singleMovie) {
       return res

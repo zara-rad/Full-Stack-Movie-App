@@ -7,6 +7,7 @@ import userRoutes from "./routes/userRoutes.js";
 import movieRoutes from "./routes/movieRoutes.js";
 import { auth } from "./middlewares/authentication.js";
 import Stripe from "stripe";
+import ImageModel from "./models/imageSchema.js";
 
 
 config();
@@ -14,7 +15,7 @@ console.clear();
 
 const PORT = 6002;
 const app = express();
-app.use(cors({ origin: "http://localhost:5173", credentials: true,exposedHeaders:["token"]}));
+app.use(cors({ origin: "http://localhost:5173", credentials: true, exposedHeaders: ["token"] }));
 
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -51,6 +52,32 @@ app.get("/movies", async (req, res, next) => {
     res.send(movieData);
   }
 });
+
+/* app.get("/images/:filename", async (req, res, next) => {
+  try {
+    const image = await ImageModel.findOne({ filename: req.params.filename })
+    if (image) {
+      const readStream = Readable.from(image.data);
+      readStream.pipe(res);
+    } else {
+      next("no such image found!");
+    }
+
+  } catch (err) {
+    next(err)
+  }
+
+
+}) */
+
+
+
+
+
+
+
+
+
 
 
 app.post("/create-checkout-session", async (req, res) => {

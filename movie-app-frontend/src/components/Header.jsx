@@ -33,20 +33,22 @@ export default function Header({ setSearchTerm, cartItems }) {
         <Link to="/profile">Profile</Link>
         <Link to="/cart" className="cart-link">
           <span role="img" aria-label="cart">
-            🛒 {/* {totalItems} */}
+            🛒
           </span>
           {cartItems.length > 0 && (
             <span className="cart-count ">
               {" "}
-              {/* {cartItems.length}  */} {totalItems}{" "}
+              {totalItems}{" "}
             </span>
           )}
         </Link>
       </nav>
 
       {!isMovieDetailPage && !isRegisterPage && !isCartPage && !isLoginPage && (
+
         <form className="search-form" onSubmit={handleSearch}>
-          <h1>Movie Search Find your favorite movies!</h1>
+          <h1>Discover Your Favorite Movies!</h1>
+
           <input
             type="text"
             name="searchInput"
@@ -57,4 +59,4 @@ export default function Header({ setSearchTerm, cartItems }) {
       )}
     </header>
   );
-}
+} 
