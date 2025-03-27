@@ -12,7 +12,7 @@ console.clear();
 
 const PORT = 6002;
 const app = express();
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: "http://localhost:5173", credentials: true,exposedHeaders:["token"]}));
 
 try {
   await mongoose.connect("mongodb://127.0.0.1:27017/Movies");
