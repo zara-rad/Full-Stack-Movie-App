@@ -10,6 +10,11 @@ import {
 } from "../controllers/userController.js";
 import multer from "multer"
 
+const multerMiddleware = multer()
+const router = Router();
+
+router.post("/", multerMiddleware.single("profile_image"), validators, addNewUser);
+
 
 
 const multerMiddleware = multer()
