@@ -8,24 +8,18 @@ import {
   addNewUser,
   loginUser,
 } from "../controllers/userController.js";
-import multer from "multer"
+import multer from "multer";
 
-const multerMiddleware = multer()
+const multerMiddleware = multer();
 const router = Router();
 
-router.post("/", multerMiddleware.single("profile_image"), validators, addNewUser);
-
-
-
-const multerMiddleware = multer()
-const router = Router();
-
-const multerMiddleware =multer()
-router.post("/", multerMiddleware.single("profile_image"),validators, addNewUser);
+router.post(
+  "/",
+  multerMiddleware.single("profile_image"),
+  validators,
+  addNewUser
+);
 router.get("/", auth, isAdmin, getAllUsers);
-
-router.post("/", multerMiddleware.single("profile_image"),validators, addNewUser);
-router.get("/", auth, isAdmin, getAllusers);
 
 router.get("/:id", auth, isAdmin, getUsersById);
 router.post("/", validators, addNewUser);
