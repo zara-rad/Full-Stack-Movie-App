@@ -11,14 +11,13 @@ export default function Cards({ searchTerm, addToCart }) {
       try {
         setLoading(true);
         const query = searchTerm || "Marvel";
-        const response = await fetch(
-          `https://www.omdbapi.com/?s=${query}&apikey=${import.meta.env.VITE_API_KEY
-          }`
-        );
+       
+
+        const response=await fetch("http://localhost:6002/movies")
         const result = await response.json();
 
-        if (result.Search) {
-          setMovies(result.Search);
+        if (result.success) {
+          setMovies(result.data);
         } else {
           setMovies([]);
         }
@@ -41,6 +40,21 @@ export default function Cards({ searchTerm, addToCart }) {
         <div className="movie-grid">
           {movies.map((movie) => (
             <div key={movie.imdbID} className="movie-item">
+              <Link to={`/movie/${movie._id}`} className="movie-title">
+                {movie.title}
+              </Link>
+              <img
+                src={movie.image}
+                alt={movie.title}
+                className="movie-poster"
+                onError={(e) => {
+                  e.target.style.display = "none";
+                  e.target.parentNode.appendChild(
+                    document.createElement("p")
+                  ).innerText = "Poster not available";
+                }}
+              />
+              <p className="movie-year">Year: {movie.year}</p>
               {/* Wrap the whole card inside Link */}
               <Link to={`/movie/${movie.imdbID}`} className="block">
                 <p className="movie-title text-lg font-semibold cursor-pointer text-center">

@@ -36,7 +36,7 @@ app.get("/movies", async (req, res, next) => {
     res.send(movies);
   } else {
     const response = await fetch(
-      `http://www.omdbapi.com/?i=${imdbID}&apikey=${process.env.VITE_API_KEY}`
+      //`http://www.omdbapi.com/?i=${imdbID}&apikey=${process.env.VITE_API_KEY}`
     );
     const movieData = await response.json();
     const updatedMoviesData = movieData.map((movie) => ({
