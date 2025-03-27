@@ -54,6 +54,7 @@ app.get("/movies", async (req, res, next) => {
 
 
 app.post("/create-checkout-session", async (req, res) => {
+
   try {
     const { cartItems } = req.body;
 
