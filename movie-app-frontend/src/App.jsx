@@ -22,7 +22,7 @@ function App() {
 
 
   const addToCart = (movie) => {
-   if (!cart.some((item) => item._id === movie._id)) {
+    if (!cart.some((item) => item._id === movie._id)) {
       setCart([...cart, { ...movie, quantity: 1 }]); // Add movie with initial quantity of 1
     } else {
       alert("This movie is already in your cart!");
@@ -32,7 +32,7 @@ function App() {
   const updateQuantity = (id, quantity) => {
     if (quantity < 1) return; // Prevent negative quantity
     setCart(
-      cart.map((item) => (item.imdbID === id ? { ...item, quantity } : item))
+      cart.map((item) => (item._id === id ? { ...item, quantity } : item))
     );
   };
   const removeFromCart = (id) => {
